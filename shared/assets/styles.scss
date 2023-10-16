@@ -6,6 +6,18 @@
   margin: 10px;
 }
 
+.eui-masthead {
+  background-color: $ipg-color !important;
+}
+
+.mat-toolbar.mat-primary {
+  background: $ipg-color !important;
+}
+
+.mat-button.mat-primary, .mat-icon-button.mat-primary, .mat-stroked-button.mat-primary {
+  color: $ipg-color !important;
+}
+
 /* Elemental UI END */
 
 /* #region VI_Styles_RendererSettings_Default (FontFamily) */
