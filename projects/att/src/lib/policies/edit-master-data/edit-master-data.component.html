@@ -1,0 +1,98 @@
+<div eui-sidesheet-content>
+    <form [formGroup]="formGroup" class="imx-policy-edit-form">
+        <div class="imx-master-data-grid">
+            <mat-card class="imx-master-data-cdrs">
+                <h2>{{'#LDS#Heading Attestation Policy Settings' | translate}}</h2>
+                <eui-alert *ngIf="policy.showSampleDataWarning" class="imx-helper-alert" type="warning" [colored]="true" [dismissable]="true">
+                    <eui-alert-header>
+                        <span translate>
+                            #LDS#Sample date could not be copied.
+                        </span>
+                    </eui-alert-header>
+                    <eui-alert-content>
+                        <span translate>
+                            #LDS#The original policy was using sample data. Because sample data can not be assigned to two different policies at once, sample data was excluded from the copy.
+                        </span>
+                        <span translate>
+                            #LDS#If you like to use sample data, please choose a new set.
+                        </span>
+                    </eui-alert-content>
+                  </eui-alert>
+                <imx-cdr-editor [cdr]="objectProperties.IsInActive?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.IsInActive.Column.ColumnName)">
+                </imx-cdr-editor>
+
+                <imx-cdr-editor [cdr]="objectProperties.Ident_AttestationPolicy?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.Ident_AttestationPolicy.Column.ColumnName)">
+                </imx-cdr-editor>
+
+                <imx-cdr-editor [cdr]="objectProperties.Description?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.Description.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.UID_AttestationObject?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.Ident_AttestationPolicy.Column.ColumnName)"
+                    (valueChange)="updateMethodAndFilter()">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.UID_PWODecisionMethod?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.UID_PWODecisionMethod.Column.ColumnName)"
+                    (valueChange)="updateAttestation()">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.Attestators?.cdr"
+                    *ngIf="policy.policy?.Attestators?.GetMetadata().GetMinLength() > 0"
+                    (controlCreated)="addControl($event, policy.policy.Attestators.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.UID_DialogSchedule?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.UID_DialogSchedule.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.SolutionDays?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.SolutionDays.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.UID_PersonOwner?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.UID_PersonOwner.Column.ColumnName)">
+                </imx-cdr-editor>
+
+                <imx-cdr-editor [cdr]="objectProperties.RiskIndex?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.RiskIndex?.Column.ColumnName)">
+                </imx-cdr-editor>
+
+                <imx-cdr-editor [cdr]="objectProperties.Areas?.cdr" *ngIf="policy?.isComplienceFrameworkEnabled"
+                    (controlCreated)="addControl($event, policy.policy.Areas.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.UID_AttestationPolicyGroup?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.UID_AttestationPolicyGroup?.Column.ColumnName)">
+                </imx-cdr-editor>
+
+                <imx-cdr-editor [cdr]="objectProperties.UID_QERPickCategory?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.UID_QERPickCategory.Column.ColumnName)"
+                    (valueChange)="updatePickCategory()">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.UID_DialogCulture?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.UID_DialogCulture?.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.IsShowElementsInvolved?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.IsShowElementsInvolved?.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.IsAutoCloseOldCases?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.IsAutoCloseOldCases.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.IsApproveRequiresMfa?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.IsApproveRequiresMfa.Column.ColumnName)">
+                </imx-cdr-editor>
+                <imx-cdr-editor [cdr]="objectProperties.LimitOfOldCases?.cdr"
+                    (controlCreated)="addControl($event, policy.policy.LimitOfOldCases.Column.ColumnName)">
+                </imx-cdr-editor>
+            </mat-card>
+            <imx-policy-editor [formGroup]="formGroup" [filterModel]="filterModel"></imx-policy-editor>
+        </div>
+    </form>
+</div>
+<div eui-sidesheet-actions color="white">
+    <button class="justify-start" *ngIf="!policy.isNew" mat-button color="warn"
+        data-imx-identifier="edit-master-data-button-delete"
+        [disabled]="!policy.policy?.IsOob?.value || hasAttestations" (click)="delete()">{{'#LDS#Delete' |
+        translate}}</button>
+    <button mat-raised-button color="primary" [disabled]="!formGroup.dirty || formGroup.invalid"
+        data-imx-identifier="edit-master-data-button-save" (click)="submit()">{{(!policy.isNew ? '#LDS#Save' :
+        '#LDS#Create')| translate}}</button>
+</div>
+<!-- TODO Later: show charts: VI_Dashboard_Attestation_BO_Dashboards-->

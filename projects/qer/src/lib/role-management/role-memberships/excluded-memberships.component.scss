@@ -1,0 +1,19 @@
+@import "@elemental-ui/core/src/styles/_palette.scss";
+
+:host {
+  background-color: $asher-gray;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.not-matched-badge {
+  margin-left: 1em;
+}
+
+.helper-alert {
+  display: flex;
+  margin-bottom: 20px;
+}
+

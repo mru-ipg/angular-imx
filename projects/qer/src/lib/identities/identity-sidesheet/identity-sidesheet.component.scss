@@ -1,0 +1,61 @@
+@import "@elemental-ui/core/src/styles/_palette.scss";
+
+.imx-helper-alert {
+  width: 100%;
+  ::ng-deep .eui-alert {
+    margin-bottom: 20px;
+  }
+}
+
+.imx-security-badge {
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.imx-account-ext {
+  padding: 30px 30px 0px 30px;
+}
+
+.imx-membership-tab {
+  flex: 1 1 auto;
+  overflow: hidden;
+  height: 100%;
+  padding: 30px;
+}
+
+@media screen and (max-width: 480px) {
+  .marked-for-delete {
+    margin: 10px 0 5px;
+    display: block;
+    width: 100%;
+  }
+}
+
+::ng-deep .mat-tab-group {
+  height: 100%;
+  flex-grow: 1;
+  overflow: auto;
+
+  .mat-tab-header {
+    padding: 0 32px;
+    background-color: $white;
+  }
+
+  ::ng-deep .mat-tab-body-wrapper {
+    height: 100%;
+  }
+
+  .imx-edit-fk-open-picker {
+    display: none;
+  }
+}
+
+.imx-toggle-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 15px;
+
+  > *:not(:last-child) {
+    margin-right: 10px;
+  }
+}

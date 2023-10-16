@@ -1,0 +1,47 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+.button-bar {
+  display: flex;
+  justify-content: flex-end;
+
+  button:not(:last-child) {
+    margin-right: 1em;
+  }
+}
+
+.helper-alert {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.margin {
+  margin-bottom: 1em;
+}
+
+imx-sqlwizard {
+  margin-bottom: 1em;
+  display: block;
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.imx-mat-card-container {
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  :first-child {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    :first-child {
+      overflow: auto;
+    }
+  }
+}

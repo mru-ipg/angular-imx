@@ -1,0 +1,45 @@
+<mat-tab-group>
+  <mat-tab [label]="'#LDS#Information' | translate">
+    <div class="imx-request-information">
+      <ng-content select="[info]"></ng-content>
+    </div>
+    <mat-card class="imx-request-properties">
+      <imx-cdr-editor *ngFor="let cdr of propertyInfo" [cdr]="cdr"></imx-cdr-editor>
+      <imx-cdr-editor *ngFor="let cdr of parameters" [cdr]="cdr"></imx-cdr-editor>
+    </mat-card>
+  </mat-tab>
+  <mat-tab [label]="'#LDS#Workflow' | translate">
+    <div class="imx-request-history">
+      <mat-card>
+        <imx-decision-history [approverContainer]="approverContainer" [workflow]="workflow"></imx-decision-history>
+      </mat-card>
+    </div>
+  </mat-tab>
+
+  <mat-tab [label]="'#LDS#Heading Product Details' | translate">
+    <div *ngIf="serviceItem" class="imx-request-item-detail">
+      <imx-service-item-detail [projectConfig]="projectConfig" [serviceItem]="serviceItem"></imx-service-item-detail>
+    </div>
+    <div *ngIf="isRoleAssignment" class="imx-request-item-detail">
+      <imx-product-entitlements [uidAccProduct]="request.UID_AccProduct.value"></imx-product-entitlements>
+    </div>
+  </mat-tab>
+
+  <mat-tab [label]="'#LDS#Heading Compliance Violations' | translate" *ngIf="extensions && extensions.length > 0">
+    <ng-template matTabContent><imx-ext [id]="ruleViolationDetailId" [properties]="{'pwoId': request.GetEntity().GetKeys()[0], 'request': request}"></imx-ext></ng-template>
+  </mat-tab>
+
+
+  <!-- TODO later
+  <ObjectSwitchContainer [ActionType]="ObjectView" [EnableNavigation]="true"
+      [SourceObject]="PersonWantsOrg"></ObjectSwitchContainer>
+-->
+
+  <!-- TODO later
+<mat-tab *ngIf="PersonWantsOrg.UID_OrgRequested.value" [label]="'#LDS#Entitlements' | translate">
+    <ng-template matTabContent>
+        <QER_EntitlementList [UidOrg]="PersonWantsOrg.UID_OrgRequested.value"></QER_EntitlementList>
+    </ng-template>
+</mat-tab>
+-->
+</mat-tab-group>

@@ -1,0 +1,23 @@
+@import '@elemental-ui/core/src/styles/_palette.scss';
+
+.imx-message-content {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-word; /* break extremely long words */
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.imx-message {
+  color: $black;
+  position: fixed;
+  width: 100%;
+  top: 64px;
+  left: 0px;
+  z-index: 9999999;
+}
+
+.imx-small-message {
+  color : $black;
+  display: block;
+}

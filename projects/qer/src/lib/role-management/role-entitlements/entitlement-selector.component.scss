@@ -1,0 +1,54 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.eui-sidesheet-content {
+  display: flex;
+  flex-direction: column;
+  :last-child {
+    flex: 1 1 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 10px;
+
+    &:disabled:hover {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.imx-selected-items {
+  justify-self: flex-start;
+  margin: 0;
+  line-height: 36px;
+}
+
+.imx-clear-button {
+  margin-right: 10px;
+}
+
+.imx-menu-spacer {
+  flex-grow: 1;
+}
+
+@media screen and (max-width: 480px) {
+  .mat-dialog-actions {
+    flex-direction: column-reverse;
+    button {
+      margin-left: 0;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+  }
+}

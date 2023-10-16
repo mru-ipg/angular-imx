@@ -1,0 +1,47 @@
+@import "@elemental-ui/core/src/styles/_palette.scss";
+
+.imx-background-highlight {
+  background-color: $asher-gray;
+}
+
+.imx-tree-node-panel {
+  display: flex;
+  flex-direction: row;
+  padding: 0 5px;
+  flex: 1 1 auto;
+  text-align: left;
+  min-width: 0;
+
+  > ::ng-deep .mat-button-wrapper {
+    color: $black;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+  }
+}
+
+.imx-tree-text {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.imx-tree-node:hover {
+  background-color: $asher-gray;
+}
+
+
+.imx-tree-more-button {
+  width: auto;
+  padding: 0 5px;
+  flex: 0 0 auto;
+  text-align: left;
+}

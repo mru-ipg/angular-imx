@@ -1,0 +1,41 @@
+<div class="roledetail-sidesheet">
+  <mat-tab-group #tabs>
+    <mat-tab data-imx-identifier="roles-overview-tab-main" [label]="'#LDS#Heading Main Data' | translate">
+      <ng-template matTabContent>
+        <imx-role-main-data #mainData></imx-role-main-data>
+      </ng-template>
+    </mat-tab>
+    <mat-tab data-imx-identifier="roles-overview-tab-memberships" *ngIf="canHaveMemberships()"
+      [label]="'#LDS#Memberships' | translate">
+      <ng-template matTabContent>
+        <imx-role-memberships #memberships>
+        </imx-role-memberships>
+      </ng-template>
+    </mat-tab>
+    <mat-tab data-imx-identifier="roles-overview-tab-entitlements" *ngIf="canHaveEntitlements()"
+      [label]="'#LDS#Entitlements' | translate">
+      <ng-template matTabContent>
+        <imx-role-entitlements></imx-role-entitlements>
+      </ng-template>
+    </mat-tab>
+
+    <mat-tab data-imx-identifier="roles-overview-tab-history" [label]="'#LDS#History' | translate">
+      <ng-template matTabContent>
+        <div class="imx-tab-content">
+          <div class="imx-tab-content-body">
+            <imx-object-history [objectType]="objectType" [viewMode]="'Grid'" [showTitle]="false"
+              [objectUid]="objectUid"></imx-object-history>
+          </div>
+        </div>
+      </ng-template>
+    </mat-tab>
+
+    <ng-container *ngFor="let tab of dynamicTabs">
+      <mat-tab [imxDataProvider]="parameters" [label]="tab.inputData.label | translate">
+        <ng-template matTabContent>
+          <ng-container *ngComponentOutlet="tab.instance"></ng-container>
+        </ng-template>
+      </mat-tab>
+    </ng-container>
+  </mat-tab-group>
+</div>

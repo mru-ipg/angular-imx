@@ -1,0 +1,70 @@
+@import "@elemental-ui/core/src/styles/_palette.scss";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  ::ng-deep .mat-tab-body-wrapper {
+    flex: 1 1 auto;
+
+    .mat-tab-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+    }
+  }
+
+  ::ng-deep .mat-tab-body-content {
+    display: flex;
+    flex-direction: column;
+  }
+}
+.mat-tab-group {
+  overflow-y: auto;
+}
+
+::ng-deep .mat-tab-labels {
+  background-color: $white;
+}
+
+.imx-mat-tab-container {
+  padding: 20px;
+}
+
+
+.imx-attestation-case-information,
+.imx-attestation-case-workflow,
+.imx-attestation-case-loss-preview,
+.imx-attestation-case-compliance-violation {
+  overflow-y: auto;
+  flex: 1 1 auto;
+
+  .imx-property-container {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
+}
+
+.imx-helper-alert {
+  width: 100%;
+
+  ::ng-deep .eui-alert {
+    margin-bottom: 20px;
+  }
+}
+
+.imx-button-bar {
+  background-color: $white;
+  display: flex;
+  justify-content: flex-end;
+  border-top: $black-c 1px solid;
+  padding: 0px 20px 20px 8px;
+  flex-wrap: wrap;
+
+  > * {
+    margin-left: 10px;
+    margin-top: 20px;
+  }
+}
