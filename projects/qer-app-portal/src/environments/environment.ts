@@ -30,7 +30,7 @@
 
 export const environment = {
   production: false,
-  clientUrl: 'http://localhost:8182',
+  clientUrl: 'https://dc01.oneidentity.demo/ApiServer',
   appName: 'qer-app-portal',
   appVersion: '1.0.0'
 };

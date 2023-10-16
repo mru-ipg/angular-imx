@@ -29,6 +29,7 @@ import { ServerExceptionError } from '../base/server-exception-error';
 import { ServerError } from '../base/server-error';
 import { ClassloggerService } from '../classlogger/classlogger.service';
 import { TranslateService } from '@ngx-translate/core';
+import { isDevMode } from '@angular/core';
 
 export class ApiClientFetch implements ApiClient {
     constructor(
@@ -42,7 +43,12 @@ export class ApiClientFetch implements ApiClient {
         const method = new MethodDefinition(methodDescriptor);
         const headers = new Headers(method.headers);
 
+        if (isDevMode()) {
+            headers.set("X-FORWARDED-PROTO", 'https');
+        }
+
         this.addXsrfProtectionHeader<T>(headers, method);
+
 
         var response: Response;
         try {
