@@ -9,7 +9,7 @@
   (selectionChanged)="onSelectionChanged($event)"
   data-imx-identifier="requests-history-datatable"
 >
-  <imx-data-table-column [entityColumn]="entitySchema?.Columns.DisplayOrg" [columnLabel]="'#LDS#Product' | translate">
+  <imx-data-table-column  [entityColumn]="entitySchema?.Columns.DisplayOrg" [columnLabel]="'#LDS#Product' | translate">
     <ng-template let-pwo>
       <div class="imx-display-column">
         <div class="imx-placeholder" *ngIf="pwo.UID_PersonWantsOrgParent.value"></div>
@@ -60,6 +60,11 @@
     </ng-template>
   </imx-data-table-column>
   <imx-data-table-column [entityColumn]="entitySchema?.Columns.OrderDate"> </imx-data-table-column>
+  <imx-data-table-column [entityColumn]="entitySchema?.Columns.OrderReason">
+    <ng-template let-item>
+      <div>{{ item.OrderReason.Column.GetDisplayValue() }}</div>
+    </ng-template>
+  </imx-data-table-column>
   <imx-data-table-generic-column columnName="viewDetailsButton">
     <ng-template let-prod>
       <button mat-button color="primary" (click)="viewDetails(prod)" data-imx-identifier="requests-history-button-view-details">

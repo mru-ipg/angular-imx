@@ -18,6 +18,25 @@
   color: $ipg-color !important;
 }
 
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: $ipg-color !important;
+}
+
+.mat-primary .mat-pseudo-checkbox-checked, .mat-primary .mat-pseudo-checkbox-indeterminate {
+  background-color: $ipg-color !important;
+}
+
+
+.mat-flat-button.mat-primary, .mat-raised-button.mat-primary, .mat-fab.mat-primary, .mat-mini-fab.mat-primary {
+  background-color: $ipg-color !important;
+}
+
+.imx-data-table-highlightedActive .mat-row:hover {
+  background-color: $ipg-color !important;
+  cursor: pointer;
+  color: white;
+}
+
 /* Elemental UI END */
 
 /* #region VI_Styles_RendererSettings_Default (FontFamily) */

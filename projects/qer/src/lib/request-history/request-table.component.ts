@@ -30,6 +30,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { EuiLoadingService, EuiSidesheetService } from '@elemental-ui/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { QerApiService } from '../qer-api-client.service';
 
 import { DataModel, DisplayColumns, EntitySchema, IClientProperty, TypedEntity, ValType } from 'imx-qbm-dbts';
 import { ITShopConfig } from 'imx-api-qer';
@@ -52,6 +53,7 @@ import { RequestActionService } from './request-action/request-action.service';
 import { ItshopRequest } from './itshop-request';
 import { RequestHistoryLoadParameters } from './request-history-load-parameters.interface';
 
+
 @Component({
   templateUrl: './request-table.component.html',
   styleUrls: ['./request-table.component.scss'],
@@ -60,6 +62,7 @@ import { RequestHistoryLoadParameters } from './request-history-load-parameters.
 export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public additional: IClientProperty[] = [];
+
   public get entitySchema(): EntitySchema {
     return this.requestHistoryService.PortalItshopRequestsSchema;
   }
@@ -70,6 +73,7 @@ export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedItems.every((item) => item.canWithdrawAdditionalApprover)
     );
   }
+   
   public get canWithdrawDelegation(): boolean {
     return (
       this.itShopConfig &&
@@ -133,6 +137,7 @@ export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(DataSourceToolbarComponent) private readonly dataToolbar: DataSourceToolbarComponent;
 
   constructor(
+    public readonly qerApiClient: QerApiService,
     public readonly actionService: RequestActionService,
     public readonly translateProvider: ImxTranslationProviderService,
     private readonly translator: TranslateService,
@@ -173,6 +178,7 @@ export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public async ngOnInit(): Promise<void> {
 
+
     this.displayedColumns = [
       this.entitySchema.Columns.DisplayOrg,
       {
@@ -187,6 +193,9 @@ export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
         ColumnName: 'viewDetailsButton',
         Type: ValType.String,
       },
+      this.entitySchema.Columns.OrderReason
+    
+
     ];
     this.activatedRoute.queryParams.subscribe((params) => {
       // Make keys lowercase
@@ -232,7 +241,10 @@ export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedItems = items;
   }
 
-  public onSearch(keywords: string): Promise<void> {
+  public onSearch(keywords: string): void {
+
+    console.log(keywords);
+    
     const navigationState = {
       ...this.navigationState,
       ...{
@@ -241,8 +253,9 @@ export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
       },
     };
 
-    return this.getData(navigationState);
+    //return this.getData(navigationState);
   }
+  
 
   public getAdditionalText(entity: ItshopRequest, additional: IClientProperty[]): string {
     return additional.map(elem =>
