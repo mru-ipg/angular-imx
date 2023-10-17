@@ -37,6 +37,11 @@
   color: white;
 }
 
+.eui-sidesheet .background--blue, .eui-sidesheet .background--iris-blue {
+  background-color: $ipg-color !important;
+  color: #fff;
+}
+
 /* Elemental UI END */
 
 /* #region VI_Styles_RendererSettings_Default (FontFamily) */
