@@ -5,7 +5,7 @@
         <button mat-menu-item data-imx-identifier="user-menu-profile" (click)="goToProfile()">
           <span translate>#LDS#Profile</span>
         </button>
-        <button mat-menu-item data-imx-identifier="user-menu-addressbook" (click)="goToAddressbook()">
+        <button *ngIf="userHasContractorRole" mat-menu-item data-imx-identifier="user-menu-addressbook" (click)="goToAddressbook()">
           <span translate>#LDS#Menu Entry Address book</span>
         </button>
       </span>

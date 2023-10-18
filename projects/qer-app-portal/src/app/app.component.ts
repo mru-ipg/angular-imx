@@ -29,9 +29,10 @@ import { Router, NavigationEnd, NavigationStart, NavigationError, RouterEvent, N
 import { Subscription } from 'rxjs';
 
 import { AuthenticationService, ISessionState, MenuItem, SystemInfoService, MenuService, IeWarningService, SplashService } from 'qbm';
-import { PendingItemsType, ProjectConfigurationService, UserModelService } from 'qer';
+import { PendingItemsType, ProjectConfigurationService, QerApiService, UserModelService } from 'qer';
 import { QerProjectConfig } from 'imx-api-qer';
 import { ProjectConfig } from 'imx-api-qbm';
+import { ApiService } from 'projects/aad/src/public_api';
 
 @Component({
   selector: 'imx-root',
@@ -48,10 +49,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private readonly subscriptions: Subscription[] = [];
 
+  public currentUserId = '';
+  public userHasContractorRole  = false;
+  public aeRole = 'Contractor';
+
   constructor(
     private readonly authentication: AuthenticationService,
     private readonly router: Router,
     private readonly splash: SplashService,
+    private readonly apiClient: QerApiService,
     menuService: MenuService,
     userModelService: UserModelService,
     systemInfoService: SystemInfoService,
@@ -60,6 +66,11 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptions.push(
       this.authentication.onSessionResponse.subscribe(async (sessionState: ISessionState) => {
+
+        if(sessionState.UserUid) {
+          this.currentUserId = sessionState.UserUid;  
+        }
+
         if (sessionState.hasErrorState) {
           // Needs to close here when there is an error on sessionState
           splash.close();
@@ -101,8 +112,30 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   public async ngOnInit(): Promise<void> {
+    this.authentication.onSessionResponse.subscribe(async (sessionState) => {
+        this.currentUserId = sessionState.UserUid;
+
+        if (this.currentUserId) {
+            try {
+                const data = await this.apiClient.typedClient.PortalPersonUid.Get(this.currentUserId);
+                const allRoles = await this.apiClient.typedClient.PortalPersonMemberships.Get(this.currentUserId);
+
+                allRoles.Data.forEach((data) => {
+                    if (data.ObjectKeyTarget.Column.GetDisplayValue() === this.aeRole) {
+                        this.userHasContractorRole = true;
+                    }
+                });
+
+                console.log(this.userHasContractorRole); // This will reflect the updated value
+            } catch (error) {
+                // Handle any errors that occur during the async operations
+                console.error(error);
+            }
+        }
+    });
+
     this.authentication.update();
-  }
+}
 
   public ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
