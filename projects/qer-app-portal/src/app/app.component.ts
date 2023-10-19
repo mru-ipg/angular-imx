@@ -92,6 +92,8 @@ export class AppComponent implements OnInit, OnDestroy {
           const systemInfo = await systemInfoService.get();
           this.menuItems = menuService.getMenuItems(systemInfo.PreProps, groupInfo.map(group => group.Name), false, config);
 
+          console.log(this.menuItems)
+
           ieWarningService.showIe11Banner();
         }
       })
@@ -118,8 +120,7 @@ export class AppComponent implements OnInit, OnDestroy {
         if (this.currentUserId) {
             try {
                 const data = await this.apiClient.typedClient.PortalPersonUid.Get(this.currentUserId);
-                const allRoles = await this.apiClient.typedClient.PortalPersonMemberships.Get(this.currentUserId);
-
+                const allRoles = await this.apiClient.typedClient.PortalPersonMemberships.Get(this.currentUserId)
                 allRoles.Data.forEach((data) => {
                     if (data.ObjectKeyTarget.Column.GetDisplayValue() === this.aeRole) {
                         this.userHasContractorRole = true;

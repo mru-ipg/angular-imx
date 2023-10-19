@@ -106,6 +106,8 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
   public readonly entitySchemaAdminPerson: EntitySchema;
   public readonly DisplayColumns = DisplayColumns;
   public filterOptions: DataSourceToolbarFilter[] = [];
+  public navigationStateFilter: CollectionLoadParameters;
+  
   public groupingOptions: DataModelProperty[] = [];
   public data: any;
 
@@ -137,6 +139,7 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
     settingsService: SettingsService,
   ) {
     this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0 };
+    this.navigationStateFilter = { PageSize: settingsService.DefaultPageSize, StartIndex: 0, withProperties: 'IsExternal' };
     this.entitySchemaPersonReports = identitiesService.personReportsSchema;
     this.entitySchemaPerson = identitiesService.personSchema;
     this.entitySchemaAdminPerson = identitiesService.adminPersonSchema;
@@ -164,6 +167,10 @@ export class DataExplorerIdentitiesComponent implements OnInit, OnDestroy, IData
   }
 
   public async ngOnInit(): Promise<void> {
+    const response = await this.identitiesService.getAllPerson(this.navigationStateFilter);
+    const externalEmployee = response.Data.map((c: any) => c.entity.entityData);
+    const filterXternals = externalEmployee.filter(ex => ex.Columns.IsExternal.Value === true);
+
     await this.init();
   }
 
