@@ -11,6 +11,7 @@ import { DataSourceToolbarModule, DataTableModule, QbmModule } from 'qbm';
 import { ExternalEmployeeDetailsComponent } from './external-employee-details/external-employee-details.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { LdsReplaceModule } from 'qbm';
 
 
 
@@ -39,6 +40,7 @@ const routes: Routes = [
     MatListModule,
     MatButtonModule,
     MatFormFieldModule,
+    LdsReplaceModule,
     EuiCoreModule,
     EuiMaterialModule,
     DataSourceToolbarModule,

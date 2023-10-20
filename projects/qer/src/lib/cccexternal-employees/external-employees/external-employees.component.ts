@@ -42,20 +42,26 @@ export class ExternalEmployeesComponent implements OnInit {
     const externalEmployee = response.Data.map((c: any) => c.entity.entityData);
     const data = externalEmployee.filter(ex => ex.Columns.IsExternal.Value === true);
     this.dataSource = data;
+    
+    const originalData = [...data];
 
     this.search.valueChanges
       .pipe(distinctUntilChanged(), debounceTime(250))
       .subscribe(() => {
         this.currentSearchValue =  this.search.value;
-        const filteredExternalsWithValue = this.dataSource.filter(f =>
-
-          f.Display.toLowerCase().startsWith(this.currentSearchValue.toLowerCase())
+        if (this.currentSearchValue && this.currentSearchValue.trim() !== '') {
+          const filteredExternalsWithValue = originalData.filter(f =>
+            f.Display.toLowerCase().startsWith(this.currentSearchValue.toLowerCase())
+          );
     
-        );
-        if(this.search.value) {
           this.dataSource = filteredExternalsWithValue;
+          console.log('triugger');
+          
+    
         } else {
-          this.dataSource = data;
+    
+          this.dataSource = originalData;
+    
         }
       });
   }

@@ -1,6 +1,5 @@
 <mat-card class="container">
-    <eui-search name="searchexample" placeholder="Search for something" [(searchControl)]="search"></eui-search>
-        <div>Current search value: {{ currentSearchValue }}</div>
+    <eui-search width="100%" name="searchexample" placeholder="Filter Externals" [(searchControl)]="search"></eui-search>
     <table mat-table class="mat-mdc-table" [dataSource]="dataSource">
         <ng-container matColumnDef="Person_UID">
             <th mat-header-cell *matHeaderCellDef> Personal_UID </th>
@@ -27,3 +26,8 @@
 
     </table>
 </mat-card>
+<div class="footer-bottom">
+    <button  mat-raised-button color="primary" data-imx-identifier="identities-button-create-new-identity" class="imx-right-button">
+        <span translate>Create identity</span>
+    </button>
+</div>
