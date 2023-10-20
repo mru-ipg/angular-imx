@@ -1,0 +1,14 @@
+<div eui-sidesheet-content>
+    <mat-card>
+      <form class="imx-form" [formGroup]="identityForm">
+       
+      </form>
+    </mat-card>
+  </div>
+  <div eui-sidesheet-actions color="white">
+    <button data-imx-identifier="create-new-identity-button-save">
+      [disabled]="accountIsOff || identityForm.invalid || !identityForm.dirty" mat-raised-button type="button"
+      color="primary">
+      {{ '#LDS#Create' | translate }}
+    </button>
+  </div>
