@@ -1,8 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { EUI_SIDESHEET_DATA } from '@elemental-ui/core';
 import { PortalPersonUid } from 'imx-api-qer';
-import { EntitySchema } from 'imx-qbm-dbts';
+import { EntitySchema, IEntityColumn } from 'imx-qbm-dbts';
 import { ProjectConfigurationService } from '../../project-configuration/project-configuration.service';
+
 
 @Component({
   selector: 'imx-external-employee-details',
@@ -11,7 +12,7 @@ import { ProjectConfigurationService } from '../../project-configuration/project
 })
 export class ExternalEmployeeDetailsComponent implements OnInit {
 
-  //public columns: IEntityColumn()
+  public columns: IEntityColumn[]
 
   private schema: EntitySchema
 
@@ -22,12 +23,16 @@ export class ExternalEmployeeDetailsComponent implements OnInit {
     private readonly configService:  ProjectConfigurationService
   ) { 
 
+    this.schema = data.GetEntity().GetSchema();
+
   }
 
   public async ngOnInit(): Promise<void> {
     let personConfig = (await this.configService.getConfig()).PersonConfig;
     let colNames = personConfig.VI_MyData_WhitePages_DetailAttributes;
-    console.log(colNames)
+    this.columns = colNames.filter(colName => this.schema.Columns[colName]).map(colName => this.data.GetEntity().GetColumn(colName));
+
+    console.log(this.columns)
   }
 
 }

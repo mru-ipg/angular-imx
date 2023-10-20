@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExternalEmployeesComponent } from './external-employees/external-employees.component';
 import { RouterModule, Routes } from '@angular/router';
-import { RouteGuardService } from 'qbm';
+import { CdrModule, RouteGuardService } from 'qbm';
 import { RequestsFeatureGuardService } from '../requests-feature-guard.service';
 import { MatListModule } from '@angular/material/list';
 import { MatButtonModule } from '@angular/material/button';
 import { EuiCoreModule, EuiMaterialModule } from '@elemental-ui/core';
 import { DataSourceToolbarModule, DataTableModule, QbmModule } from 'qbm';
 import { ExternalEmployeeDetailsComponent } from './external-employee-details/external-employee-details.component';
+
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    CdrModule,
     RouterModule.forChild(routes),
     MatListModule,
     MatButtonModule,
