@@ -1,4 +1,6 @@
 <mat-card class="container">
+    <eui-search name="searchexample" placeholder="Search for something" [(searchControl)]="search"></eui-search>
+        <div>Current search value: {{ currentSearchValue }}</div>
     <table mat-table class="mat-mdc-table" [dataSource]="dataSource">
         <ng-container matColumnDef="Person_UID">
             <th mat-header-cell *matHeaderCellDef> Personal_UID </th>

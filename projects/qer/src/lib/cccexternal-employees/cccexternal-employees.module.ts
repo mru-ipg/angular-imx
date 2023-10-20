@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { EuiCoreModule, EuiMaterialModule } from '@elemental-ui/core';
 import { DataSourceToolbarModule, DataTableModule, QbmModule } from 'qbm';
 import { ExternalEmployeeDetailsComponent } from './external-employee-details/external-employee-details.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 
 
 
@@ -31,15 +33,18 @@ const routes: Routes = [
   imports: [
     CommonModule,
     CdrModule,
+    MatInputModule,
+    MatFormFieldModule,
     RouterModule.forChild(routes),
     MatListModule,
     MatButtonModule,
+    MatFormFieldModule,
     EuiCoreModule,
     EuiMaterialModule,
     DataSourceToolbarModule,
     DataTableModule,
     QbmModule
   ],
-  exports: [ExternalEmployeesComponent],
+  exports: [ExternalEmployeesComponent, ExternalEmployeeDetailsComponent],
 })
 export class CCCExternalEmployeesModule { }

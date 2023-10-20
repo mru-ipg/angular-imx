@@ -31,8 +31,6 @@ export class ExternalEmployeeDetailsComponent implements OnInit {
     let personConfig = (await this.configService.getConfig()).PersonConfig;
     let colNames = personConfig.VI_MyData_WhitePages_DetailAttributes;
     this.columns = colNames.filter(colName => this.schema.Columns[colName]).map(colName => this.data.GetEntity().GetColumn(colName));
-
-    console.log(this.columns)
   }
 
 }

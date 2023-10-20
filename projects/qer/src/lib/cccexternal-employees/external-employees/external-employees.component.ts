@@ -1,12 +1,15 @@
-import { E } from '@angular/cdk/keycodes';
+
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
-import { EuiLoadingComponent, EuiLoadingService, EuiSidesheetService } from '@elemental-ui/core';
-import { PortalPersonAll, PortalPersonAllWrapper, PortalPersonUid } from 'imx-api-qer';
-import { CollectionLoadParameters, EntitySchema, IClientProperty, TypedEntityCollectionData } from 'imx-qbm-dbts';
+import { FormControl } from '@angular/forms';
+import { EuiLoadingService, EuiSidesheetService } from '@elemental-ui/core';
+import { PortalPersonUid } from 'imx-api-qer';
+import { CollectionLoadParameters, EntitySchema } from 'imx-qbm-dbts';
 import { IdentitiesService } from '../../identities/identities.service';
 import { QerApiService } from '../../qer-api-client.service';
 import { ExternalEmployeeDetailsComponent } from '../external-employee-details/external-employee-details.component';
+import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
+import { F } from '@angular/cdk/keycodes';
 
 
 
@@ -23,43 +26,63 @@ export class ExternalEmployeesComponent implements OnInit {
   public displayedColumns: string[] = ['Person_UID', 'Name', 'Default Email Address', 'actions'];
   dataSource: any[];
 
+  search = new FormControl();
+  currentSearchValue: string;
+
   constructor(private readonly identitiesService: IdentitiesService, 
     private readonly apiClient: QerApiService,
     private readonly busyService: EuiLoadingService,
     private readonly slideSheet: EuiSidesheetService
-    ) { }
+    ) { 
+      
+    }
 
   public async ngOnInit(): Promise<void> {
     const response = await this.identitiesService.getAllPerson(this.navigationState);
     const externalEmployee = response.Data.map((c: any) => c.entity.entityData);
     const data = externalEmployee.filter(ex => ex.Columns.IsExternal.Value === true);
     this.dataSource = data;
+
+    this.search.valueChanges
+      .pipe(distinctUntilChanged(), debounceTime(250))
+      .subscribe(() => {
+        this.currentSearchValue =  this.search.value;
+        const filteredExternalsWithValue = this.dataSource.filter(f =>
+
+          f.Display.toLowerCase().startsWith(this.currentSearchValue.toLowerCase())
+    
+        );
+        if(this.search.value) {
+          this.dataSource = filteredExternalsWithValue;
+        } else {
+          this.dataSource = data;
+        }
+      });
   }
  
   public async navigateToDetails(person_UID:string):Promise<void> { 
     let overlayRef: OverlayRef;
     setTimeout(() => (overlayRef = this.busyService.show()));
-    let response: any;
-    let data: any[];
+    let response: PortalPersonUid;
+    let firstName: string;
     try {
-       response = await this.apiClient.typedClient.PortalPersonUid.Get(person_UID);
-       data = response.Data[0];
-    
+       response = (await this.apiClient.typedClient.PortalPersonUid.Get(person_UID)).Data[0];
+      
     } catch (error) {
-  
-      console.error(e => error)
+
     
     } finally { 
       this.busyService.hide();
+      firstName = response.GetEntity().GetDisplay()
   
     }
 
     this.slideSheet.open(ExternalEmployeeDetailsComponent, { 
-      title: 'External Person',
+      title: firstName,
       headerColour: 'green',
       padding: '0',
       width:' 600px',
-      data: data
+      data: response
     })
 
     

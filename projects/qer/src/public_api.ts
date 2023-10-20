@@ -158,3 +158,4 @@ export { RequestParameterDataEntity } from './lib/itshop/request-info/request-pa
 export { BaseTreeRoleRestoreHandler } from './lib/role-management/restore/restore-handler';
 export { CCCExternalEmployeesModule } from './lib/cccexternal-employees/cccexternal-employees.module';
 export { ExternalEmployeesComponent } from './lib/cccexternal-employees/external-employees/external-employees.component';
+export { ExternalEmployeeDetailsComponent } from './lib/cccexternal-employees/external-employee-details/external-employee-details.component';
