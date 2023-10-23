@@ -216,3 +216,42 @@ h1 {
     grid-column-end: 5;
   }
 }
+
+.text-blue-60 {
+  color: #0a96d1;
+}
+
+.row-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.icon-wrapper {
+  text-align: center;
+}
+
+.cat-boxes {
+  background-color: rgb(189, 189, 189);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+  min-height: 80px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    background-color: lightgray;
+  }
+
+  .small {
+    font-weight: bold;
+    font-size: 12px;
+  }
+}
+

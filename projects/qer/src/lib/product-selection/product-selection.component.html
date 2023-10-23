@@ -152,6 +152,17 @@
   </mat-tab-group>
 </ng-template>
 
+
+<div class="row-flex">
+  <div class="cat-boxes" *ngFor="let item of categoryBoxes">
+    <div>
+      <div class="icon-wrapper">
+        <eui-icon size="l"  class="text-blue-60" icon="applications"></eui-icon>
+      </div>
+      <small class="small">{{item.Display}}</small>
+    </div>
+  </div>
+
 <ng-template #serviceItemList>
   <imx-serviceitem-list
     data-imx-identifier="productselection-serviceitem-list"

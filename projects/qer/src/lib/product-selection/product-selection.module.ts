@@ -62,6 +62,7 @@ import { PatternDetailsSidesheetComponent } from './pattern-details-sidesheet/pa
 import { ProductEntitlementsComponent } from '../itshop/request-info/service-item-detail//product-entitlements/product-entitlements.component';
 import { PatternItemsModule } from '../pattern-item-list/pattern-items.module';
 import { OptionalItemsSidesheetComponent } from './optional-items-sidesheet/optional-items-sidesheet.component';
+import { TilesModule } from '../tiles/tiles.module';
 
 const routes: Routes = [
   {
@@ -90,6 +91,7 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     QbmModule,
     TranslateModule,
+    TilesModule,
     ItshopModule,
     ServiceItemsModule,
     PatternItemsModule,

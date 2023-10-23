@@ -33,7 +33,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 
-import { IWriteValue, EntityValue, LocalProperty, ValueStruct, MultiValue } from 'imx-qbm-dbts';
+import { IWriteValue, EntityValue, LocalProperty, ValueStruct, MultiValue, EntityData } from 'imx-qbm-dbts';
 import {
   PortalShopServiceitems,
   PortalShopCategories,
@@ -102,6 +102,7 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
   public canSelectFromTemplate: boolean;
   public canSelectByRefUser: boolean;
   public selectedCategory: PortalShopCategories;
+  public categoryBoxes: PortalShopCategories[] | any[];
   public referenceUser: ValueStruct<string>;
   public uidPersonPeerGroup: string;
   public displayProducts = true;
@@ -175,6 +176,13 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
     } catch (error) {
       
     } finally {
+      
+        const colmn = response.map((b) => b.GetEntity().GetColumn('Ident_AccProductGroup'));
+        const test = colmn.map((c: any ) => c.entity.entityData);
+        console.log(test)
+        this.categoryBoxes = test;
+      
+        
         
     }
   
