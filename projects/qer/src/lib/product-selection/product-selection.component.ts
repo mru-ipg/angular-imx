@@ -168,7 +168,16 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
   }
 
   public async ngOnInit(): Promise<void> {
+    let response: PortalShopCategories[];
 
+    try {
+       response = await (await this.productSelectionService.getServiceCategories({ UID_Person: this.userUid})).Data;
+    } catch (error) {
+      
+    } finally {
+        
+    }
+  
     // define the recipients as a multi-valued property
     const recipientsProperty = new LocalProperty();
     recipientsProperty.IsMultiValued = true;
