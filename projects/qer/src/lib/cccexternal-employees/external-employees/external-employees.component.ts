@@ -5,11 +5,13 @@ import { FormControl } from '@angular/forms';
 import { EuiLoadingService, EuiSidesheetService } from '@elemental-ui/core';
 import { PortalPersonUid } from 'imx-api-qer';
 import { CollectionLoadParameters, EntityData, EntitySchema } from 'imx-qbm-dbts';
+import { ProjectConfigurationService } from '../../project-configuration/project-configuration.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { IdentitiesService } from '../../identities/identities.service';
 import { QerApiService } from '../../qer-api-client.service';
 import { CreateNewEmployeeComponent } from '../create-new-employee/create-new-employee.component';
 import { ExternalEmployeeDetailsComponent } from '../external-employee-details/external-employee-details.component';
+import { ProjectConfig } from 'imx-api-qbm';
 
 
 
@@ -22,6 +24,7 @@ export class ExternalEmployeesComponent implements OnInit {
 
   public readonly schema: EntitySchema;
   public navigationState: CollectionLoadParameters = { PageSize: 500, withProperties: 'IsExternal' };
+  private projectConfig: ProjectConfig;
 
   public displayedColumns: string[] = ['Person_UID', 'Name', 'Default Email Address', 'actions'];
 
@@ -33,12 +36,14 @@ export class ExternalEmployeesComponent implements OnInit {
   constructor(private readonly identitiesService: IdentitiesService, 
     private readonly apiClient: QerApiService,
     private readonly busyService: EuiLoadingService,
-    private readonly slideSheet: EuiSidesheetService
+    private readonly slideSheet: EuiSidesheetService,
+    private readonly configService: ProjectConfigurationService,
     ) { 
       
     }
 
   public async ngOnInit(): Promise<void> {
+    this.projectConfig = await this.configService.getConfig();
     const response = await this.identitiesService.getAllPerson(this.navigationState);
     const externalEmployee = response.Data.map((c: any) => c.entity.entityData);
     const data = externalEmployee.filter(ex => ex.Columns.IsExternal.Value === true);
@@ -69,13 +74,18 @@ export class ExternalEmployeesComponent implements OnInit {
     setTimeout(() => (overlayRef = this.busyService.show()));
 
 
-   this.slideSheet.open( CreateNewEmployeeComponent, { 
-    title: 'Create new Identity',
-    headerColour: 'green',
-    padding: '0',
-    width:' 600px',
-    data: ''
-    })
+    this.slideSheet.open( CreateNewEmployeeComponent, { 
+      title: 'Create new External Identity',
+      headerColour: 'green',
+      padding: '0',
+      width:' 600px',
+      data: {
+        selectedIdentity: await this.identitiesService.createEmptyEntity(),
+        projectConfig: this.projectConfig
+      }
+      }).afterClosed().toPromise();
+  
+      this.busyService.hide()
   }
 
 
