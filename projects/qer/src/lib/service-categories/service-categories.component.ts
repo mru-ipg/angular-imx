@@ -34,12 +34,12 @@ import { ITShopConfig, PortalServicecategories, PortalShopServiceitems } from 'i
 import { IEntity } from 'imx-qbm-dbts';
 
 import { isIE, SettingsService, SnackBarService } from 'qbm';
-import { ServiceCategoriesService } from './service-categories.service';
-import { ServiceCategoryTreeDatabase } from './service-category-tree-database';
-import { ServiceCategoryChangedType } from './service-category-changed.enum';
 import { ProjectConfigurationService } from '../project-configuration/project-configuration.service';
-import { ServiceCategoryComponent } from './service-category.component';
 import { ServiceItemsService } from '../service-items/service-items.service';
+import { ServiceCategoriesService } from './service-categories.service';
+import { ServiceCategoryChangedType } from './service-category-changed.enum';
+import { ServiceCategoryTreeDatabase } from './service-category-tree-database';
+import { ServiceCategoryComponent } from './service-category.component';
 
 @Component({
   selector: 'imx-service-categories',
@@ -89,8 +89,10 @@ export class ServiceCategoriesComponent implements OnDestroy {
       serviceCategory = (await this.serviceCategoriesProvider.getById(key))?.Data?.[0];
 
       serviceItemsInitialSelection = (await this.serviceItemsService.get({ UID_AccProductGroup: key }))?.Data;
+      console.log(serviceCategory);
     } finally {
       setTimeout(() => this.busyService.hide(overlayRef));
+      console.log(serviceItemsInitialSelection)
     }
 
     if (serviceCategory) {
@@ -123,6 +125,8 @@ export class ServiceCategoriesComponent implements OnDestroy {
       }
 
       this.hasData = this.treeDatabase.hasData;
+      console.log(this.treeDatabase.topLevelEntities);
+    
     }));
   }
 

@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { EuiLoadingService, EuiSidesheetRef, EuiSidesheetService, EUI_SIDESHEET_DATA } from '@elemental-ui/core';
 import { ColumnDependentReference, ConfirmationService, SnackBarService } from 'qbm';
@@ -15,7 +15,7 @@ import { PortalPersonReportsInteractive, QerProjectConfig } from 'imx-api-qer';
   templateUrl: './create-new-employee.component.html',
   styleUrls: ['./create-new-employee.component.scss']
 })
-export class CreateNewEmployeeComponent implements OnDestroy {
+export class CreateNewEmployeeComponent implements OnInit {
 
   public identityForm = new FormGroup({});
   public cdrListPersonal: ColumnDependentReference[] = [];
