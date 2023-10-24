@@ -33,6 +33,7 @@ import { PortalShopCategories } from 'imx-api-qer';
 import { ClassloggerService, SettingsService } from 'qbm';
 import { ProductSelectionService } from '../product-selection.service';
 import { ServicecategoryTreeDatabase } from './servicecategory-tree-database';
+import { Router } from '@angular/router';
 
 /** Shows information about the currently selected category. */
 @Component({
@@ -60,6 +61,7 @@ export class ServiceCategoryListComponent implements OnInit, OnChanges {
   constructor(
     private readonly logger: ClassloggerService,
     private readonly busyService: EuiLoadingService,
+    private readonly router: Router,
     settings: SettingsService,
     private readonly productSelectionService: ProductSelectionService) {
     this.treeDatabase = new ServicecategoryTreeDatabase(busyService, settings, productSelectionService);
@@ -68,6 +70,7 @@ export class ServiceCategoryListComponent implements OnInit, OnChanges {
   }
 
   public async ngOnInit(): Promise<void> {
+    console.log(this.selectedServiceCategory)
     this.serviceCategoriesCaption = await this.productSelectionService.getServiceCategoryDisplaySingular();
   }
 
@@ -82,11 +85,14 @@ export class ServiceCategoryListComponent implements OnInit, OnChanges {
   }
 
   public async onServiceCategoryChanged(servicecategory: PortalShopCategories): Promise<void> {
+
     this.serviceCategorySelected.emit(servicecategory);
   }
 
   public resetCategory(): void {
+    this.router.navigate(['/productselection']);
     this.selectedServiceCategoryTree = [];
+  
   }
 
   public onIncludeChilds(checked: boolean): void {
@@ -130,7 +136,9 @@ export class ServiceCategoryListComponent implements OnInit, OnChanges {
   }
 
   private async updateDropdown(): Promise<void> {
+  
     const parentUid = this.selectedServiceCategory.UID_AccProductGroupParent.value;
+
     const parent = await this.getParent(parentUid);
 
     const children = await this.getChildren();

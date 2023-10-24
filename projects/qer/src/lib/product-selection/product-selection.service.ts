@@ -25,15 +25,24 @@
  */
 
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { CollectionLoadParameters, EntitySchema, TypedEntityCollectionData } from 'imx-qbm-dbts';
 import { PortalShopCategories } from 'imx-api-qer';
 import { QerApiService } from '../qer-api-client.service';
 
 @Injectable()
 export class ProductSelectionService {
+
+    private product$ = new BehaviorSubject<any>({});
+    selectedProduct$ = this.product$.asObservable();
+
     constructor(
         private readonly qerClient: QerApiService
     ) { }
+
+    setProduct(product: PortalShopCategories ) {
+        this.product$.next(product);
+    }
 
     public getServiceCategoryDisplaySingular(): string {
         const schema = this.qerClient.typedClient.PortalShopCategories.GetSchema();

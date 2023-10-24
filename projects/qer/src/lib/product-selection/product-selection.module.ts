@@ -63,11 +63,19 @@ import { ProductEntitlementsComponent } from '../itshop/request-info/service-ite
 import { PatternItemsModule } from '../pattern-item-list/pattern-items.module';
 import { OptionalItemsSidesheetComponent } from './optional-items-sidesheet/optional-items-sidesheet.component';
 import { TilesModule } from '../tiles/tiles.module';
+import { ServiceItemsComponent } from './service-items/service-items.component';
 
 const routes: Routes = [
   {
     path: 'productselection',
     component: ProductSelectionComponent,
+    canActivate: [RouteGuardService, RequestsFeatureGuardService],
+    resolve: [RouteGuardService]
+  },
+
+  {
+    path: 'services',
+    component: ServiceItemsComponent,
     canActivate: [RouteGuardService, RequestsFeatureGuardService],
     resolve: [RouteGuardService]
   }
@@ -106,7 +114,8 @@ const routes: Routes = [
     RoleMembershipsComponent,
     ProductDetailsSidesheetComponent,
     PatternDetailsSidesheetComponent,
-    OptionalItemsSidesheetComponent
+    OptionalItemsSidesheetComponent,
+    ServiceItemsComponent
   ],
   providers: [
     ProductSelectionService
@@ -137,6 +146,12 @@ export class ProductSelectionModule {
             {
               id: 'QER_Requests_NewRequest',
               route: 'productselection',
+              title: '#LDS#Menu Entry New request',
+              sorting: '10-10',
+            },
+            {
+              id: 'QER_List',
+              route: 'services',
               title: '#LDS#Menu Entry New request',
               sorting: '10-10',
             },

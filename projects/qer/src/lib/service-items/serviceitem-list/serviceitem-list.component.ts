@@ -65,6 +65,7 @@ import { ServiceItemsService } from '../service-items.service';
 import { ServiceItemInfoComponent } from '../service-item-info/service-item-info.component';
 import { ImageService } from '../../itshop/image.service';
 import { TranslateService } from '@ngx-translate/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'imx-serviceitem-list',
@@ -120,6 +121,7 @@ export class ServiceitemListComponent implements AfterViewInit, OnChanges, OnDes
     private readonly dialog: MatDialog,
     private readonly image: ImageService,
     private readonly translate: TranslateService,
+    private readonly router: Router,
     settingsService: SettingsService,
   ) {
     this.navigationState = { PageSize: settingsService.DefaultPageSize, StartIndex: 0 };
@@ -198,6 +200,7 @@ export class ServiceitemListComponent implements AfterViewInit, OnChanges, OnDes
     });
 
     try {
+      console.log(this.selectedServiceCategory)
       const data = await this.serviceItemsProvider.get({
         ...this.navigationState,
         UID_Person: this.recipients ? MultiValue.FromString(this.recipients.value).GetValues().join(',') : undefined,
@@ -272,7 +275,7 @@ export class ServiceitemListComponent implements AfterViewInit, OnChanges, OnDes
   public async onRemoveChip(): Promise<void> {
     this.selectedServiceCategory = null;
     this.categoryRemoved.emit(this.selectedServiceCategory);
-    await this.getData();
+    this.router.navigate(['/productselection']);
   }
 
   public selectAll(): void {

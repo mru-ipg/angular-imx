@@ -132,6 +132,7 @@ export { RoleService } from './lib/role-management/role.service';
 export { RolesOverviewComponent } from './lib/role-management/roles-overview/roles-overview.component';
 export { ServiceCategoriesModule } from './lib/service-categories/service-categories.module';
 export { ServiceCategoriesService } from './lib/service-categories/service-categories.service';
+export { ServiceCategoryListComponent } from './lib/product-selection/servicecategory-list/servicecategory-list.component';
 export { ServiceItemTagsComponent } from './lib/service-item-tags/service-item-tags.component';
 export { ServiceItemTagsModule } from './lib/service-item-tags/service-item-tags.module';
 export { ServiceItemTagsService } from './lib/service-item-tags/service-item-tags.service';

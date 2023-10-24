@@ -1,0 +1,15 @@
+
+<div *ngIf="selectedProduct" class="imx-tab-body-content">
+
+    <imx-serviceitem-list
+    data-imx-identifier="productselection-serviceitem-list"
+    (handleAction)="handleServiceItemAction($event)"
+    [selectedServiceCategory]="selectedProduct"
+    [itemActions]="serviceItemActions"
+    [keywords]="searchString"
+    [recipients]="recipients"
+    [referenceUserUid]="referenceUser?.DataValue"
+    [uidPersonPeerGroup]="uidPersonPeerGroup"
+  >
+  </imx-serviceitem-list>
+</div>

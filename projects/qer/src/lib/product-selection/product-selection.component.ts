@@ -32,6 +32,7 @@ import { EuiLoadingService, EuiSidesheetService } from '@elemental-ui/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 import { IWriteValue, EntityValue, LocalProperty, ValueStruct, MultiValue, EntityData, IEntity } from 'imx-qbm-dbts';
 import {
@@ -74,6 +75,7 @@ import { PatternItemListComponent } from '../pattern-item-list/pattern-item-list
 import { OptionalItemsSidesheetComponent } from './optional-items-sidesheet/optional-items-sidesheet.component';
 import { ServiceItemOrder } from './service-item-order.interface';
 import { DependencyService } from './optional-items-sidesheet/dependency.service';
+import { FormControl } from '@angular/forms';
 
 /** Main entry component for the product selection page. */
 @Component({
@@ -87,6 +89,9 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
   @ViewChild(ServiceCategoryListComponent) public serviceCategoryListComponent: ServiceCategoryListComponent;
 
   @Output() public serviceCategorySelected = new EventEmitter<PortalShopCategories | IEntity>();
+
+  search = new FormControl();
+  currentSearchValue: string;
 
   public readonly dataSourceView = { selected: 'cardlist' };
   public includeChildCategories: boolean;
@@ -174,10 +179,12 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
     let response: PortalShopCategories[];
 
     try {
+      this.busyIndicator.show();
        response = await (await this.productSelectionService.getServiceCategories({ UID_Person: this.userUid})).Data;
     } catch (error) {
       
     } finally {
+        this.busyIndicator.hide();
         this.categoryBoxes = response; 
     
     }
@@ -243,6 +250,24 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
     this.cartItemRecipients = new BaseCdr(this.recipients.Column, '#LDS#Recipients');
 
     this.cartItemRecipientsReadonly = new BaseReadonlyCdr(this.recipients.Column, '#LDS#Target identities');
+
+    const originalData = [...this.categoryBoxes];
+
+    this.search.valueChanges
+      .pipe(distinctUntilChanged(), debounceTime(250))
+      .subscribe(() => {
+        this.currentSearchValue =  this.search.value;
+        if (this.currentSearchValue && this.currentSearchValue.trim() !== '') {
+          const filteredExternalsWithValue = originalData.filter(f =>
+            f.GetEntity().GetDisplay().toLowerCase().startsWith(this.currentSearchValue.toLowerCase())
+          );
+    
+          this.categoryBoxes = filteredExternalsWithValue;
+        } else {
+    
+          this.categoryBoxes = originalData;
+        }
+      });
   }
 
   public ngOnDestroy(): void {
@@ -273,15 +298,13 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
 
   public onServiceCategorySelected(selectedCategory: PortalShopCategories): void {
 
-    this.serviceitemListComponent.resetKeywords();
     this.selectedCategory = selectedCategory;
 
     this.serviceCategorySelected.emit(this.selectedCategory);
+    this.productSelectionService.setProduct(this.selectedCategory);
 
-    if (this.selectedCategory == null) {
-      this.serviceCategoryListComponent.resetCategory();
+    this.router.navigate(['/services']);
     }
-  }
 
   public showProductGroupSelector(): boolean {
     return this.requesterSelected() && !this.uidaccproduct;

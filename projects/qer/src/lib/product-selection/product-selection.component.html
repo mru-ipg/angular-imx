@@ -102,56 +102,9 @@
 <!-- TODO later: a service category can be bookmarked / marked as a favorite.
       to do this, the UID of the selected category may be encoded in the URL -->
 
-<ng-container *ngTemplateOutlet="referenceUser || uidPersonPeerGroup ? reference_or_peer : normal_request"></ng-container>
-
-<ng-template #normal_request>
-  <mat-tab-group *ngIf="canSelectFromTemplate; else serviceItemList" (selectedTabChange)="onTableChange($event)">
-    <mat-tab [label]="'#LDS#Heading Products' | translate">
-      <div class="imx-tab-body-content">
-        <ng-container *ngTemplateOutlet="serviceItemList"></ng-container>
-      </div>
-    </mat-tab>
-    <mat-tab [label]="'#LDS#Heading Request Templates' | translate">
-      <ng-template matTabContent>
-        <div class="imx-tab-body-content">
-          <imx-pattern-item-list
-            data-imx-identifier="productselection-patternitem-list"
-            [keywords]="searchString"
-            [recipients]="recipients"
-            [itemActions]="patternItemActions"
-            (selectionChanged)="onTemplateSelectionChanged($event)"
-            (handleAction)="handlePatternItemAction($event)"
-            [dataSourceView]="dataSourceView"
-          ></imx-pattern-item-list>
-        </div>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
-</ng-template>
-
-<ng-template #reference_or_peer>
-  <mat-tab-group (selectedTabChange)="onTabChange($event)">
-    <mat-tab [label]="'#LDS#Heading Products' | translate">
-      <div class="imx-tab-body-content">
-        <ng-container *ngTemplateOutlet="serviceItemList"></ng-container>
-      </div>
-    </mat-tab>
-    <mat-tab [label]="'#LDS#Heading Organizational Structures' | translate">
-      <div class="imx-tab-body-content">
-        <imx-role-memberships
-          [recipients]="recipientsWrapper"
-          [referenceUser]="referenceUser"
-          [personPeerGroupUid]="uidPersonPeerGroup"
-          (selectionChanged)="onRoleSelectionChanged($event)"
-          (addItemToCart)="addRoleToCart($event)"
-          [dataSourceView]="getDataSourceView()"
-        >
-        </imx-role-memberships>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-</ng-template>
-
+<div class="search">
+  <eui-search width="50%" name="searchexample" placeholder="Filter ServiceCategories" [(searchControl)]="search"></eui-search>
+</div>
 
 <div class="row-flex">
   <div (click)="onServiceCategorySelected(item)" class="cat-boxes" *ngFor="let item of categoryBoxes">
@@ -181,46 +134,6 @@
   </imx-serviceitem-list>
 </ng-template>
 
-<ng-container>
-  <div data-imx-identifier="productselection-div-buttonbar" class="imx-button-bar">
-    <ng-container *ngIf="displayProducts; else selectedRolesDisplay">
-      <p class="imx-selected-products">
-        <span data-imx-identifier="productselection-selection-count">{{ '#LDS#Selected products' | translate }}</span>
-        <eui-badge class="imx-badge" color="orange">{{ selectedItems?.length + selectedTemplates?.length }}</eui-badge>
-      </p>
-      <button mat-stroked-button (click)="onSelectall()" data-imx-identifier="productselection-select-all">{{ '#LDS#Select all on page' | translate }}</button>
-      <button
-        mat-stroked-button
-        (click)="onDeselectAll()"
-        data-imx-identifier="productselection-deselect-all"
-        [disabled]="selectedItems?.length === 0 && selectedTemplates?.length === 0"
-      >
-        {{ '#LDS#Deselect all' | translate }}
-      </button>
-    </ng-container>
-    <ng-template #selectedRolesDisplay>
-      <p class="imx-selected-products">
-        <span data-imx-identifier="productselection-roles-selection-count">{{ '#LDS#Selected organizational structures' | translate }} </span>
-        <eui-badge class="imx-badge" color="orange">{{ selectedRoles?.length }}</eui-badge>
-      </p>
-      <button mat-stroked-button (click)="selectAllRolesOnPage()" data-imx-identifier="productselection-roles-select-all">{{ '#LDS#Select all on page' | translate }}</button>
-      <button mat-stroked-button (click)="deselectAllRoles()" data-imx-identifier="productselection-roles-deselect-all" [disabled]="!selectedRoles?.length">
-        {{ '#LDS#Deselect all' | translate }}
-      </button>
-    </ng-template>
-    <div class="imx-menu-spacer"></div>
-
-    <button
-      [disabled]="(!selectedItems?.length && !selectedTemplates?.length && !selectedRoles?.length) || !requesterSelected()"
-      mat-raised-button
-      color="primary"
-      (click)="onAddItemsToCart()"
-      data-imx-identifier="productselection-button-add-to-cart"
-    >
-      {{ '#LDS#Add to cart' | translate }}
-    </button>
-  </div>
-</ng-container>
 
 <ng-template #Call4>
   <div mat-dialog-content>
