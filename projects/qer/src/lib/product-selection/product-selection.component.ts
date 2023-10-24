@@ -24,7 +24,7 @@
  *
  */
 
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -33,7 +33,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 
-import { IWriteValue, EntityValue, LocalProperty, ValueStruct, MultiValue, EntityData } from 'imx-qbm-dbts';
+import { IWriteValue, EntityValue, LocalProperty, ValueStruct, MultiValue, EntityData, IEntity } from 'imx-qbm-dbts';
 import {
   PortalShopServiceitems,
   PortalShopCategories,
@@ -85,6 +85,8 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
   @ViewChild(ServiceitemListComponent) public serviceitemListComponent: ServiceitemListComponent;
   @ViewChild(PatternItemListComponent) public patternitemListComponent: PatternItemListComponent;
   @ViewChild(ServiceCategoryListComponent) public serviceCategoryListComponent: ServiceCategoryListComponent;
+
+  @Output() public serviceCategorySelected = new EventEmitter<PortalShopCategories | IEntity>();
 
   public readonly dataSourceView = { selected: 'cardlist' };
   public includeChildCategories: boolean;
@@ -176,14 +178,8 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
     } catch (error) {
       
     } finally {
-      
-        const colmn = response.map((b) => b.GetEntity().GetColumn('Ident_AccProductGroup'));
-        const test = colmn.map((c: any ) => c.entity.entityData);
-        console.log(test)
-        this.categoryBoxes = test;
-      
-        
-        
+        this.categoryBoxes = response; 
+    
     }
   
     // define the recipients as a multi-valued property
@@ -276,8 +272,11 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
   }
 
   public onServiceCategorySelected(selectedCategory: PortalShopCategories): void {
+
     this.serviceitemListComponent.resetKeywords();
     this.selectedCategory = selectedCategory;
+
+    this.serviceCategorySelected.emit(this.selectedCategory);
 
     if (this.selectedCategory == null) {
       this.serviceCategoryListComponent.resetCategory();
