@@ -37,6 +37,7 @@ export { BusinessownerAddonTileModule } from './lib/businessowner-addon-tile/bus
 export { BusinessOwnerOverviewTileComponent } from './lib/businessowner-overview-tile/businessowner-overview-tile.component';
 export { BusinessownerOverviewTileModule } from './lib/businessowner-overview-tile/businessowner-overview-tile.module';
 export { CCCExternalEmployeesModule } from './lib/cccexternal-employees/cccexternal-employees.module';
+export  {CartItemsService} from './lib/shopping-cart/cart-items.service';
 export { CreateNewEmployeeComponent } from './lib/cccexternal-employees/create-new-employee/create-new-employee.component';
 export { ExternalEmployeeDetailsComponent } from './lib/cccexternal-employees/external-employee-details/external-employee-details.component';
 export { ExternalEmployeesComponent } from './lib/cccexternal-employees/external-employees/external-employees.component';

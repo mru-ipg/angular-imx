@@ -20,4 +20,12 @@
 
 .footer-bottom {
     margin-top: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.search {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
 }

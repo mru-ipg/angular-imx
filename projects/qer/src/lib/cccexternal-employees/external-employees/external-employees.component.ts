@@ -1,6 +1,7 @@
 
+import { DOCUMENT } from '@angular/common';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { EuiLoadingService, EuiSidesheetService } from '@elemental-ui/core';
 import { PortalPersonUid } from 'imx-api-qer';
@@ -26,14 +27,21 @@ export class ExternalEmployeesComponent implements OnInit {
   public navigationState: CollectionLoadParameters = { PageSize: 500, withProperties: 'IsExternal' };
   private projectConfig: ProjectConfig;
 
-  public displayedColumns: string[] = ['Person_UID', 'Name', 'Default Email Address', 'actions'];
+  public checked = false;
+  public disabled = false;
+  public hasSelectedRows = false;
+  public showCustomCsvExporter: boolean = false;
+
+  public displayedColumns: string[] = ['Select','Person_UID', 'Name', 'Default Email Address', 'actions'];
 
   dataSource: any[];
+  selectedRows: any[] = [];
 
   search = new FormControl();
   currentSearchValue: string;
 
-  constructor(private readonly identitiesService: IdentitiesService, 
+  constructor(private readonly identitiesService: IdentitiesService,
+    @Inject(DOCUMENT) private document: Document, 
     private readonly apiClient: QerApiService,
     private readonly busyService: EuiLoadingService,
     private readonly slideSheet: EuiSidesheetService,
@@ -114,7 +122,68 @@ export class ExternalEmployeesComponent implements OnInit {
       data: response
     })
 
-    
+  }
+
+  onSlideToggle(): void {
+    this.showCustomCsvExporter = !this.showCustomCsvExporter;
+  }
+
+  onCheckboxChange(event: any, row: any) {
+      if (event.checked) {
+        this.hasSelectedRows = true;
+        console.log(this.selectedRows);
+        this.selectedRows.push(row);
+      } else {
+        const index = this.selectedRows.indexOf(row);
+        console.log(index)
+        if (index >= 0) {
+          this.selectedRows.splice(index, 1);
+        }
+      }
+
+      this.hasSelectedRows = this.selectedRows.length > 0 ? true : false;
+  }
+
+  exportCSV(): void {
+
+    const filteredColumns = this.displayedColumns.filter((col) => !['Select', 'actions'].includes(col));
+    const headers = filteredColumns.join(',') + '\n';
+
+    const csvRows = this.selectedRows.map((item) => {
+     const rowValues =  filteredColumns.map((column) => {
+        if (column === 'Name') {
+          return item.Display;
+        } else if (column === 'Default Email Address') {
+          return item.Columns.DefaultEmailAddress.Value;
+        } else if (column === 'Person_UID') {
+          return item.Keys[0]
+        }
+      });
+
+      return rowValues;
+
+    }).join('\n');
+
+    const csvData = headers + csvRows;
+    const blob = new Blob([csvData], {type: 'text/csv'});
+    const url =  window.URL.createObjectURL(blob);
+
+    const a = this.document.createElement('a');
+    a.setAttribute('style', 'display:none');
+    this.document.body.appendChild(a);
+    a.download = 'data_' + this.getCurrentData() +'.csv';
+    a.href= url;
+    a.click();
+    this.document.body.removeChild(a);
+  }
+
+
+  getCurrentData(): string {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return  `${day}_${month}_${year}`;
   }
 
 }

@@ -56,6 +56,11 @@ import { QerApiService } from '../../qer-api-client.service';
   styleUrls: ['./service-items.component.scss']
 })
 export class ServiceItemsComponent implements OnInit {
+   
+  /**
+   * If set to false the css class for the fullscreen view will be deactivated
+   */
+  public showFullscreen = true;
 
   @Output() public serviceCategorySelected = new EventEmitter<PortalShopCategories | IEntity>();
 

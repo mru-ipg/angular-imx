@@ -180,7 +180,7 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
 
     try {
       this.busyIndicator.show();
-       response = await (await this.productSelectionService.getServiceCategories({ UID_Person: this.userUid})).Data;
+       response = (await this.productSelectionService.getServiceCategories({ UID_Person: this.userUid})).Data;
     } catch (error) {
       
     } finally {
@@ -300,7 +300,6 @@ export class ProductSelectionComponent implements OnInit, OnDestroy {
 
     this.selectedCategory = selectedCategory;
 
-    this.serviceCategorySelected.emit(this.selectedCategory);
     this.productSelectionService.setProduct(this.selectedCategory);
 
     this.router.navigate(['/services']);

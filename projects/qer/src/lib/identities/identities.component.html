@@ -1,4 +1,4 @@
-<mat-card class="data-explorer data-explorer--identities" [class.identities--fullscreen]="showFullscreen">
+<div class="data-explorer data-explorer--identities" [class.identities--fullscreen]="showFullscreen">
   <div class="data-explorer-card-header">
     <div class="data-explorer-card-header-bg">
       <eui-icon icon="contactinfo" size="28px"></eui-icon>
@@ -46,7 +46,7 @@
 
     <imx-data-source-paginator *ngIf="!dstSettings?.groupData?.currentGrouping" [dst]="dst"></imx-data-source-paginator>
   </div>
-</mat-card>
+</div>
 <div class="data-explorer-bottom-button-row">
   <button mat-button [matMenuTriggerFor]="menu" data-imx-identifier="identities-button-actions" *ngIf="isManagerForPersons">
     <eui-icon icon="ellipsisvertical"></eui-icon>

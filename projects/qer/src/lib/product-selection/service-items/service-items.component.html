@@ -1,5 +1,5 @@
-
-<div *ngIf="selectedProduct" class="imx-tab-body-content">
+<div class="data-explorer data-explorer--identities" [class.identities--fullscreen]="showFullscreen">
+  <div *ngIf="selectedProduct" class="imx-tab-body-content">
 
     <imx-serviceitem-list
     data-imx-identifier="productselection-serviceitem-list"
@@ -12,4 +12,5 @@
     [uidPersonPeerGroup]="uidPersonPeerGroup"
   >
   </imx-serviceitem-list>
+  </div>
 </div>

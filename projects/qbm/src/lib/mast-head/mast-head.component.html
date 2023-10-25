@@ -3,10 +3,6 @@
     <mat-toolbar-row>
       <!-- custom logo-->
       <img class="custom-logo" *ngIf="logoUrl" [src]="logoUrl" data-imx-identifier="masthead-custom-logo" (click)="goHome()">
-
-      <h1 class="imx-masthead-app-name" data-imx-identifier="masthead-button-goHome" (click)="goHome()">
-        {{ appConfig?.Config?.Title }}
-      </h1>
       <span class="imx-masthead-space"></span>
       <span class="imx-masthead--controls">
         <!-- TODO #289551 hide User-Menü in MastHead on smaller screens
@@ -25,11 +21,12 @@
 </eui-top-navigation> -->
 
 <ng-template #mastHeadMenu>
+
   <button mat-button class="imx-masthead-user-button" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="imxUserMenu"
-    data-imx-identifier="user-menu">
-    <eui-icon icon="user"></eui-icon>
-    <span>{{ sessionState?.Username }}</span>
-  </button>
+  data-imx-identifier="user-menu">
+  <eui-icon icon="user"></eui-icon>
+  <span>{{ sessionState?.Username }}</span>
+</button>
   <mat-menu #imxUserMenu="matMenu">
     <ng-content select="[imx-profile-menu-items]"></ng-content>
     <button mat-menu-item data-imx-identifier="user-menu-signout" (click)="logout()">
