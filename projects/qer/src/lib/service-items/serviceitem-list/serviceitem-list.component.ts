@@ -200,7 +200,6 @@ export class ServiceitemListComponent implements AfterViewInit, OnChanges, OnDes
     });
 
     try {
-      console.log(this.selectedServiceCategory)
       const data = await this.serviceItemsProvider.get({
         ...this.navigationState,
         UID_Person: this.recipients ? MultiValue.FromString(this.recipients.value).GetValues().join(',') : undefined,

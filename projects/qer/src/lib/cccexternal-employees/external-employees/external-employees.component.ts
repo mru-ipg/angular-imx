@@ -131,11 +131,9 @@ export class ExternalEmployeesComponent implements OnInit {
   onCheckboxChange(event: any, row: any) {
       if (event.checked) {
         this.hasSelectedRows = true;
-        console.log(this.selectedRows);
         this.selectedRows.push(row);
       } else {
         const index = this.selectedRows.indexOf(row);
-        console.log(index)
         if (index >= 0) {
           this.selectedRows.splice(index, 1);
         }

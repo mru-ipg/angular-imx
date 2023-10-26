@@ -89,10 +89,8 @@ export class ServiceCategoriesComponent implements OnDestroy {
       serviceCategory = (await this.serviceCategoriesProvider.getById(key))?.Data?.[0];
 
       serviceItemsInitialSelection = (await this.serviceItemsService.get({ UID_AccProductGroup: key }))?.Data;
-      console.log(serviceCategory);
     } finally {
       setTimeout(() => this.busyService.hide(overlayRef));
-      console.log(serviceItemsInitialSelection)
     }
 
     if (serviceCategory) {
@@ -125,7 +123,6 @@ export class ServiceCategoriesComponent implements OnDestroy {
       }
 
       this.hasData = this.treeDatabase.hasData;
-      console.log(this.treeDatabase.topLevelEntities);
     
     }));
   }

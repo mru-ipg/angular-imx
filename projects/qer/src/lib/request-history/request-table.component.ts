@@ -242,8 +242,6 @@ export class RequestTableComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   public onSearch(keywords: string): void {
-
-    console.log(keywords);
     
     const navigationState = {
       ...this.navigationState,

@@ -230,7 +230,6 @@ export class ServiceItemsComponent implements OnInit {
   
 
   public async handleServiceItemAction(action: { name: string; item: PortalShopServiceitems }): Promise<void> {
-    console.log(action.name)
     if (action.name === 'addToCart') {
       this.addItemToCart(action.item);
     }
@@ -249,7 +248,6 @@ export class ServiceItemsComponent implements OnInit {
   }
 
   public async addItemToCart(serviceItem: PortalShopServiceitems): Promise<void> {
-    console.log(serviceItem)
     const outgoingOrder: ServiceItemOrder = {
       serviceItems: [serviceItem],
     };

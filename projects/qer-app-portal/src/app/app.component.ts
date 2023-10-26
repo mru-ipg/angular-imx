@@ -92,8 +92,6 @@ export class AppComponent implements OnInit, OnDestroy {
           const systemInfo = await systemInfoService.get();
           this.menuItems = menuService.getMenuItems(systemInfo.PreProps, groupInfo.map(group => group.Name), false, config);
 
-          console.log(this.menuItems)
-
           ieWarningService.showIe11Banner();
         }
       })
