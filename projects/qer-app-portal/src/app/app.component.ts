@@ -51,7 +51,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public currentUserId = '';
   public userHasContractorRole  = false;
-  public aeRole = 'Contractor';
+  public aeRole = 'Employee Managers';
 
   constructor(
     private readonly authentication: AuthenticationService,
@@ -117,15 +117,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
         if (this.currentUserId) {
             try {
-                const data = await this.apiClient.typedClient.PortalPersonUid.Get(this.currentUserId);
                 const allRoles = await this.apiClient.typedClient.PortalPersonMemberships.Get(this.currentUserId)
                 allRoles.Data.forEach((data) => {
                     if (data.ObjectKeyTarget.Column.GetDisplayValue() === this.aeRole) {
                         this.userHasContractorRole = true;
                     }
                 });
-
-                console.log(this.userHasContractorRole); // This will reflect the updated value
             } catch (error) {
                 // Handle any errors that occur during the async operations
                 console.error(error);
