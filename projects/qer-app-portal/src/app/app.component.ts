@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly subscriptions: Subscription[] = [];
 
   public currentUserId = '';
-  public userHasContractorRole  = false;
+  public userHasEmployeeManagersRole  = false;
   public aeRole = 'Employee Managers';
 
   constructor(
@@ -120,7 +120,7 @@ export class AppComponent implements OnInit, OnDestroy {
                 const allRoles = await this.apiClient.typedClient.PortalPersonMemberships.Get(this.currentUserId)
                 allRoles.Data.forEach((data) => {
                     if (data.ObjectKeyTarget.Column.GetDisplayValue() === this.aeRole) {
-                        this.userHasContractorRole = true;
+                        this.userHasEmployeeManagersRole = true;
                     }
                 });
             } catch (error) {

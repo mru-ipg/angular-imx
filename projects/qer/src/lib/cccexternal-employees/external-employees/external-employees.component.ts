@@ -50,7 +50,7 @@ export class ExternalEmployeesComponent implements OnInit {
       
     }
 
-  public async ngOnInit(): Promise<void> {
+   async ngOnInit(): Promise<void> {
     this.projectConfig = await this.configService.getConfig();
     const response = await this.identitiesService.getAllPerson(this.navigationState);
     const externalEmployee = response.Data.map((c: any) => c.entity.entityData);

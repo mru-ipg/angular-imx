@@ -91,6 +91,11 @@ export class QerService {
             route: 'externals',
             title: 'External Employees'
           },
+          {
+            id: 'uid',
+            route: 'create-externals',
+            title: 'Create External Employees'
+          },
         ],
       };
     

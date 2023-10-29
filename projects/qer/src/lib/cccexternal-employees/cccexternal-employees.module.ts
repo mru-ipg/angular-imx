@@ -14,6 +14,7 @@ import { RequestsFeatureGuardService } from '../requests-feature-guard.service';
 import { CreateNewEmployeeComponent } from './create-new-employee/create-new-employee.component';
 import { ExternalEmployeeDetailsComponent } from './external-employee-details/external-employee-details.component';
 import { ExternalEmployeesComponent } from './external-employees/external-employees.component';
+import { NewEmployeeSiteComponent } from './new-employee-site/new-employee-site.component';
 
 
 
@@ -23,8 +24,14 @@ const routes: Routes = [
     component: ExternalEmployeesComponent,
     canActivate: [RouteGuardService, RequestsFeatureGuardService],
     resolve: [RouteGuardService],
+  },
+  {
+    path: 'create-externals',
+    component: NewEmployeeSiteComponent,
+    canActivate: [RouteGuardService, RequestsFeatureGuardService],
+    resolve: [RouteGuardService],
   }
-
+    
 ];
 
 
@@ -32,7 +39,8 @@ const routes: Routes = [
   declarations: [
     ExternalEmployeesComponent,
     ExternalEmployeeDetailsComponent,
-    CreateNewEmployeeComponent
+    CreateNewEmployeeComponent,
+    NewEmployeeSiteComponent
   ],
   imports: [
     CommonModule,
